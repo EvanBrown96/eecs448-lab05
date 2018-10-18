@@ -1,0 +1,21 @@
+body {
+  background-color: #26C485;
+}
+
+.container {
+  border: 2px solid #2F0601;
+  background-color: #32908F;
+  padding: 1vw;
+  border-radius: 1vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+}
+
+.header {
+  background-color: #A3E7FC;
+}
+
+.colored {
+  background-color: #553A41;
+  color: white;
+}
