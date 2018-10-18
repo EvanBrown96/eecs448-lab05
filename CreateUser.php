@@ -23,12 +23,15 @@ $query = "SELECT * FROM users WHERE user_id='" . $username . "';";
 
 if($result = $mysqli->query($query)){
 
-  while($row = $result->fetch_assoc()){
-    if($row["user_id"] == $username){
-      echo("The username " . $username . " is already in use, try again.");
-      exit();
-    }
+  // check if there are any values in this query result -
+  //   if there are, display an error message
+  if($result->fetch_assoc()){
+
+    echo("The username " . $username . " is already in use, try again.");
+    exit();
+
   }
+
   $result->free();
 }
 
