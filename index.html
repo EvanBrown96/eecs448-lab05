@@ -22,6 +22,95 @@
         <a class="nav-link" href="./AdminHome.html">Admin Home</a>
       </nav>
     </div>
+
+    <?php
+      // get the page number from url arguments
+      $post_count = 0;
+      $page_num = $_GET["page"];
+      if($page_num == ""){
+        $page_num = 1;
+      }
+      else{
+        $page_num = (int)$page_num;
+      }
+
+
+
+      // create mysql connection
+      $mysqli = new mysqli("mysql.eecs.ku.edu", "e329b498", "pu4oefeL", "e329b498");
+
+      // check that the connection was successful
+      if($mysqli->connect_errno){
+        echo("Connection to MySQL server failed: " . $mysqli->connect_errno);
+        exit();
+      }
+
+
+
+      // get total number of posts
+      $query = "SELECT COUNT(*) AS 'count' FROM posts;";
+
+      if($result = $mysqli->query($query)){
+        $post_count = (int)$result->fetch_assoc()["count"];
+
+        $result->free();
+      }
+
+
+
+      // get the posts for this page
+      $query = "SELECT * FROM posts WHERE post_id > " . ($post_count - ($page_num*10)) . " AND post_id <= " . ($post_count - ($page_num * 10) + 10) . " ORDER BY post_id DESC;";
+
+      if($result = $mysqli->query($query)){
+        while($row = $result->fetch_assoc()){
+          echo("<div class='container'><div><p>#" . $row['post_id'] . " by " . $row['author_id'] . "</p></div><div>" . $row['content'] . "</div></div>");
+        }
+
+        $result->free();
+
+      }
+
+      // close connection
+      $mysqli->close();
+
+
+
+      $max_pages = ceil($post_count/10);
+
+      echo("<div class='container' style='text-align:right;'>");
+      if($page_num > 1){
+        echo("<a class='body-link' href='?page=1'>1</a> ");
+      }
+      if($page_num > 2){
+        echo("<a class='body-link' href='?page=2'>2</a> ");
+      }
+      if($page_num > 4){
+        echo("... ");
+      }
+
+      if($page_num > 3){
+        echo("<a class='body-link' href='?page=" . ($page_num-1) . "'>" . ($page_num-1) . "</a> ");
+      }
+      echo($page_num . " ");
+      if($page_num < $max_pages-2){
+        echo("<a class='body-link' href='?page=" . ($page_num+1) . "'>" . ($page_num+1) . "</a> ");
+      }
+
+      if($page_num < $max_pages-3){
+        echo("... ");
+      }
+      if($page_num < $max_pages-1){
+        echo("<a class='body-link' href='?page=" . ($max_pages-1) . "'>" . ($max_pages-1) . "</a> ");
+      }
+      if($page_num < $max_pages){
+        echo("<a class='body-link' href='?page=" . $max_pages . "'>" . $max_pages . "</a> ");
+      }
+
+
+      echo("</div>");
+    ?>
+
+
     <!-- <div class="container" style="text-align: center;">
       <form action="./CreatePost.php" method="post">
         <div class="form-group">

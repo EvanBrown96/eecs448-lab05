@@ -53,6 +53,8 @@ else{
   echo("Error pushing username to database: " . $mysqli->error);
 }
 
+
+
 // close connection
 $mysqli->close();
 

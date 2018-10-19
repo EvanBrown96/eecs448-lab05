@@ -50,4 +50,8 @@ else{
 }
 
 
+
+// close connection
+$mysqli->close();
+
 ?>
