@@ -1,5 +1,7 @@
 <?php
 
+echo("<a href='./index.html'>Go Home</a><br><a href='./CreatePost.html'>Go Back</a><br><br>");
+
 // get username and post information from POST data
 $username = $_POST["username"];
 $post_data = $_POST["post-data"];
