@@ -20,3 +20,7 @@ body {
   background-color: #553A41;
   color: white;
 }
+
+a.body-link {
+  color: white;
+}
