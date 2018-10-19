@@ -9,6 +9,8 @@ if($username == ""){
   exit();
 }
 
+
+
 // create mysql connection
 $mysqli = new mysqli("mysql.eecs.ku.edu", "e329b498", "pu4oefeL", "e329b498");
 
@@ -17,6 +19,8 @@ if($mysqli->connect_errno){
   echo("Connection to MySQL server failed: " . $mysqli->connect_errno);
   exit();
 }
+
+
 
 // see if this user has already been entered
 $query = "SELECT * FROM users WHERE user_id='" . $username . "';";
@@ -35,6 +39,8 @@ if($result = $mysqli->query($query)){
   $result->free();
 }
 
+
+
 // add this user to the table
 $query = "INSERT INTO users VALUES ('" . $username . "')";
 
@@ -42,7 +48,7 @@ if($mysqli->query($query) === TRUE){
   echo("Username " . $username . " successfully registered in database!");
 }
 else{
-  echo("Error pusing username to database: " . $mysqli->error);
+  echo("Error pushing username to database: " . $mysqli->error);
 }
 
 // close connection
