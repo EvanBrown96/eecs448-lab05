@@ -12,6 +12,19 @@ body {
   margin-bottom: 1vw;
 }
 
+.container.top {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin-bottom: 0px;
+}
+
+.container.bottom {
+  background-color: #553A41;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  margin-top: 0px;
+}
+
 .header {
   background-color: #A3E7FC;
 }
