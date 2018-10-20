@@ -24,33 +24,17 @@ if($mysqli->connect_errno){
 
 
 
-// see if this user has already been entered
-$query = "SELECT * FROM users WHERE user_id='" . $username . "';";
-
-if($result = $mysqli->query($query)){
-
-  // check if there are any values in this query result -
-  //   if there are, display an error message
-  if($result->fetch_assoc()){
-
-    echo("The username " . $username . " is already in use, try again.");
-    exit();
-
-  }
-
-  $result->free();
-}
-
-
-
 // add this user to the table
-$query = "INSERT INTO users VALUES ('" . $username . "')";
-
-if($mysqli->query($query) === TRUE){
+$query = $mysqli->prepare("INSERT INTO users VALUES (?)");
+$query->bind_param("s", $username);
+if($query->execute() === TRUE){
   echo("Username " . $username . " successfully registered in database!");
 }
+else if($mysqli->errno == 1062){
+  echo("The username " . $username . " is already registered.");
+}
 else{
-  echo("Error pushing username to database: " . $mysqli->error);
+  echo("Error adding username to database: " . $mysqli->err);
 }
 
 
