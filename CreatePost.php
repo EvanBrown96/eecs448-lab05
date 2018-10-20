@@ -23,30 +23,18 @@ if($mysqli->connect_errno){
 
 
 
-// check that the entered user is a valid user
-$query = "SELECT * FROM users WHERE user_id='" . $username . "';";
-
-if($result = $mysqli->query($query)){
-
-  if(!($result->fetch_assoc())){
-    echo("The given username " . $username . " is not registered - post not saved.");
-    exit();
-  }
-
-  $result->free();
-
-}
-
-
-
 // add this post to the table
-$query = "INSERT INTO posts (content, author_id) VALUES ('" . $post_data . "', '" . $username . "');";
+$query = $mysqli->prepare("INSERT INTO posts (content, author_id) VALUES (?, ?);");
+$query->bind_param("ss", $post_data, $username);
 
-if($mysqli->query($query) === TRUE){
+if($query->execute() === TRUE){
   echo("Post successfully registered in database under username " . $username . "!");
 }
+else if($mysqli->errno == 1452){
+  echo("The given username " . $username . " is not registered - post not saved.");
+}
 else{
-  echo("Error saving post to database: " . $mysqli->error);
+  echo("Error saving post to database: " . $mysqli->errno);
 }
 
 

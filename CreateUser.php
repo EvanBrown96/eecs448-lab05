@@ -27,6 +27,7 @@ if($mysqli->connect_errno){
 // add this user to the table
 $query = $mysqli->prepare("INSERT INTO users VALUES (?)");
 $query->bind_param("s", $username);
+
 if($query->execute() === TRUE){
   echo("Username " . $username . " successfully registered in database!");
 }
@@ -34,7 +35,7 @@ else if($mysqli->errno == 1062){
   echo("The username " . $username . " is already registered.");
 }
 else{
-  echo("Error adding username to database: " . $mysqli->err);
+  echo("Error adding username to database: " . $mysqli->errno);
 }
 
 
