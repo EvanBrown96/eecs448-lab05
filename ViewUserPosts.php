@@ -37,7 +37,6 @@ if($query->execute()){
   echo("</table>");
 
   $result->free();
-  //echo("Username " . $username . " successfully registered in database!");
 }
 else{
   echo("Error getting user's posts: " . $mysqli->errno);

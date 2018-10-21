@@ -44,7 +44,7 @@
           if($result = $mysqli->query($query)){
 
             while($row = $result->fetch_assoc()){
-              echo("<tr><td><input type='checkbox' name='posts' value='" . $row['post_id'] . "'></td><td>" . $row['post_id'] . "</td><td>" . $row['author_id'] . "</td></tr>");
+              echo("<tr><td><input type='checkbox' name='" . $row['post_id'] . "' value='true'></td><td>" . $row['post_id'] . "</td><td>" . $row['author_id'] . "</td></tr>");
             }
 
             $result->free();
