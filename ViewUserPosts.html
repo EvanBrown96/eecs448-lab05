@@ -24,7 +24,7 @@
     </div>
 
     <div class="container">
-      <form action="./ViewUserPosts.php" method="get">
+      <form action="./ViewUserPosts.php" method="post">
         <select name="user">
           <?php
 
@@ -44,7 +44,7 @@
           if($result = $mysqli->query($query)){
             $index = 0;
             while($row = $result->fetch_assoc()){
-              echo("<option value=" . join("\"", split('"', $row['user_id'])) . ">" . $row['user_id'] . "</option>");
+              echo("<option value=\"" . join("&quot;", split('"', $row['user_id'])) . "\">" . $row['user_id'] . "</option>");
             }
 
             $result->free();
