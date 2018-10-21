@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
 
-    <title>View Posts By User</title>
+    <title>Delete Posts</title>
   </head>
   <body>
 
@@ -24,8 +24,8 @@
     </div>
 
     <div class="container">
-      <form action="./ViewUserPosts.php" method="post">
-        <select name="user">
+      <form action="./DeletePost.php" method="post">
+        <table><tr><th>Delete?</th><th>Post #</th><th>Author</th></tr>
           <?php
 
           // create mysql connection
@@ -38,13 +38,13 @@
           }
 
 
-          $query = "SELECT * FROM users";
+          $query = "SELECT * FROM posts";
           // add this user to the dropdown
 
           if($result = $mysqli->query($query)){
 
             while($row = $result->fetch_assoc()){
-              echo("<option value=\"" . join("&quot;", split('"', $row['user_id'])) . "\">" . $row['user_id'] . "</option>");
+              echo("<tr><td><input type='checkbox' name='posts' value='" . $row['post_id'] . "'></td><td>" . $row['post_id'] . "</td><td>" . $row['author_id'] . "</td></tr>");
             }
 
             $result->free();
@@ -59,8 +59,8 @@
           $mysqli->close();
 
           ?>
-        </select>
-
+        </table>
+        <br>
         <button class="btn colored" type="submit">Submit</button>
       </form>
     </div>
