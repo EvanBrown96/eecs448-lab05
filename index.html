@@ -48,12 +48,15 @@
 
 
       // get total number of posts
-      $query = "SELECT COUNT(*) AS 'count' FROM posts;";
+      $query = "SELECT post_id FROM posts ORDER BY post_id DESC LIMIT 1";
 
       if($result = $mysqli->query($query)){
-        $post_count = (int)$result->fetch_assoc()["count"];
-
+        $post_count = (int)$result->fetch_assoc()["post_id"];
         $result->free();
+      }
+      else{
+        echo("Error getting posts counts: " . $mysqli->errno);
+        exit();
       }
 
 
@@ -62,12 +65,17 @@
       $query = "SELECT * FROM posts WHERE post_id > " . ($post_count - ($page_num*10)) . " AND post_id <= " . ($post_count - ($page_num * 10) + 10) . " ORDER BY post_id DESC;";
 
       if($result = $mysqli->query($query)){
+
         while($row = $result->fetch_assoc()){
           echo("<div><div class='container top'>#" . $row['post_id'] . " by " . $row['author_id'] . "</div><div class='container bottom'>" . $row['content'] . "</div></div>");
         }
 
         $result->free();
 
+      }
+      else{
+        echo("Error getting posts: " . $mysqli->errno);
+        exit();
       }
 
       // close connection
